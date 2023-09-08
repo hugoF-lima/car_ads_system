@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Car Ads</title>
+    <style>
+        /* Add your custom CSS styles here */
+        .car {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .car-image {
+            flex: 0 0 200px;
+            margin-right: 20px;
+        }
+        
+        .car-image img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .car-details {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <h1>Car Ads</h1>
+    
+    <div id="car-list"></div>
+
+    <script>
+        // Fetch car data from JSON file
+        fetch('E:/Documents/Java_Scripts/06-Jun_2023/sys_automovel/sys_auto/carData.json')
+            .then(response => response.json())
+            .then(data => {
+                const carList = document.getElementById('car-list');
+                
+                // Iterate through each car in the data
+                data.forEach(car => {
+                    // Create a car element
+                    const carElement = document.createElement('div');
+                    carElement.classList.add('car');
+                    
+                    // Create car image element
+                    const carImage = document.createElement('div');
+                    carImage.classList.add('car-image');
+                    const image = document.createElement('img');
+                    image.src = car.imageData; // Use the "imageData" key from the JSON
+                    carImage.appendChild(image);
+                    carElement.appendChild(carImage);
+                    
+                    // Create car details element
+                    const carDetails = document.createElement('div');
+                    carDetails.classList.add('car-details');
+                    
+                    // Add car details (e.g., make, model, year, price)
+                    const makeModel = document.createElement('h2');
+                    makeModel.textContent = car.Fabricante_Anunc + ' ' + car.Modelo_Anunc; // Use the "Fabricante_Anunc" and "Modelo_Anunc" keys from the JSON
+                    carDetails.appendChild(makeModel);
+                    
+                    const year = document.createElement('p');
+                    year.textContent = 'Year: ' + car.Ano_veic_Anunc; // Use the "Ano_veic_Anunc" key from the JSON
+                    carDetails.appendChild(year);
+                    
+                    const price = document.createElement('p');
+                    price.textContent = 'Price: ' + car.Km_veic_Anunc; // Use the "Km_veic_Anunc" key from the JSON
+                    carDetails.appendChild(price);
+                    
+                    carElement.appendChild(carDetails);
+                    
+                    // Add car element to the car list
+                    carList.appendChild(carElement);
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    </script>
+</body>
+</html>
